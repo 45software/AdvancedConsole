@@ -1,12 +1,13 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Threading.Tasks;
 
 
 namespace ConsoleApp
 {
 	class Program
 	{
-		static void Main(string[] args)
+		static async Task Main(string[] args)
 		{
 			IHost host = Host.CreateDefaultBuilder()
 								.ConfigureServices((context, services) =>
@@ -14,6 +15,7 @@ namespace ConsoleApp
 									services.Configure<CustomOptions>(context.Configuration
 																							.GetSection(CustomOptions.Section));
 
+									services.AddTransient<IDisposableService, DisposableService>();
 									services.AddTransient<IConsoleService, ConsoleService>();
 
 									services.AddLogging();
@@ -21,8 +23,9 @@ namespace ConsoleApp
 								})
 								.Build();
 
-			IConsoleService service = ActivatorUtilities.CreateInstance<ConsoleService>(host.Services);
-			service.Run(args);
+			await host.Services.GetService<IConsoleService>().RunAsync(args);
+
+			host.Dispose();
 		}
 	}
 }

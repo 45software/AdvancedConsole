@@ -1,7 +1,11 @@
-﻿namespace ConsoleApp
+﻿using System;
+using System.Threading.Tasks;
+
+
+namespace ConsoleApp
 {
-	public interface IConsoleService
+	public interface IConsoleService : IDisposable
 	{
-		void Run(string[] args);
+		Task RunAsync(string[] args);
 	}
 }
