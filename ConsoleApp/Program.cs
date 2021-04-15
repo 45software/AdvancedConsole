@@ -8,21 +8,26 @@ namespace ConsoleApp
 	{
 		static void Main(string[] args)
 		{
-			IHost host = Host.CreateDefaultBuilder()
-								.ConfigureServices((context, services) =>
-								{
-									services.Configure<CustomOptions>(context.Configuration
-																							.GetSection(CustomOptions.Section));
+			using IHost host = ConfigureHost();
 
-									services.AddTransient<IConsoleService, ConsoleService>();
+			host.Services.GetService<IConsoleService>().Run(args);
+		}
 
-									services.AddLogging();
-									services.AddOptions();
-								})
-								.Build();
 
-			IConsoleService service = ActivatorUtilities.CreateInstance<ConsoleService>(host.Services);
-			service.Run(args);
+		static private IHost ConfigureHost()
+		{
+			return Host.CreateDefaultBuilder()
+						.ConfigureServices((context, services) =>
+						{
+							services.Configure<CustomOptions>(context.Configuration
+																					.GetSection(CustomOptions.Section));
+
+							services.AddTransient<IConsoleService, ConsoleService>();
+
+							services.AddLogging();
+							services.AddOptions();
+						})
+						.Build();
 		}
 	}
 }
