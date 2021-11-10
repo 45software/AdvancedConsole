@@ -11,7 +11,7 @@ namespace ConsoleApp
 	{
 		static async Task Main(string[] args)
 		{
-			IHost host = Host.CreateDefaultBuilder()
+			using IHost host = Host.CreateDefaultBuilder()
 				.ConfigureServices((context, services) =>
 				{
 					services.AddLogging();
@@ -23,8 +23,6 @@ namespace ConsoleApp
 				.Build();
 
 			await host.Services.GetService<IConsoleService>().RunAsync(args);
-
-			host.Dispose();
 		}
 	}
 }
