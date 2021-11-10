@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using ClassLib;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Threading.Tasks;
@@ -9,15 +10,18 @@ namespace ConsoleApp.Services
 	public class ConsoleService : IConsoleService
 	{
 		private readonly IDisposableService _service;
+		private readonly ILibraryService _library;
 		private readonly ILogger<ConsoleService> _logger;
 		private readonly CustomOptions _options;
 
 
 		public ConsoleService(IDisposableService service,
+									ILibraryService library,
 									ILogger<ConsoleService> logger,
 									IOptions<CustomOptions> options)
 		{
 			_service = service;
+			_library = library;
 			_logger = logger;
 			_options = options.Value;
 		}
@@ -37,6 +41,7 @@ namespace ConsoleApp.Services
 				_options.Url, _options.UseHttps);
 
 			await _service.DoSomethingAsync();
+			await _library.DoSomethingSpecialAsync();
 		}
 	}
 }
