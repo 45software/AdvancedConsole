@@ -1,33 +1,28 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using ClassLib;
+using ConsoleApp.Services;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Threading.Tasks;
 
 
 namespace ConsoleApp
 {
 	class Program
 	{
-		static void Main(string[] args)
+		static async Task Main(string[] args)
 		{
-			using IHost host = ConfigureHost();
+			using IHost host = Host.CreateDefaultBuilder()
+				.ConfigureServices((context, services) =>
+				{
+					services.AddLogging();
+					services.AddOptions();
 
-			host.Services.GetService<IConsoleService>().Run(args);
-		}
+					services.AddConsoleApp();
+					services.AddCustomLibrary();
+				})
+				.Build();
 
-
-		static private IHost ConfigureHost()
-		{
-			return Host.CreateDefaultBuilder()
-						.ConfigureServices((context, services) =>
-						{
-							services.Configure<CustomOptions>(context.Configuration
-																					.GetSection(CustomOptions.Section));
-
-							services.AddTransient<IConsoleService, ConsoleService>();
-
-							services.AddLogging();
-							services.AddOptions();
-						})
-						.Build();
+			await host.Services.GetService<IConsoleService>().RunAsync(args);
 		}
 	}
 }
