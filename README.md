@@ -24,7 +24,7 @@ demo shows. There's a great [video on youtube](https://www.youtube.com/watch?v=Q
 
 ## Options Pattern Configuration
 The recommended method of handling application configuration is using
-[options pattern] (https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options?view=aspnetcore-6.0)
+[options pattern](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options?view=aspnetcore-6.0)
 configuration. There are several benefits identified in the linked article. This demo shows how to implement the options
 pattern configuration for both the main application and for a class library.
 
