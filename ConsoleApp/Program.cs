@@ -5,24 +5,24 @@ using Microsoft.Extensions.Hosting;
 using System.Threading.Tasks;
 
 
-namespace ConsoleApp
+namespace ConsoleApp;
+
+
+class Program
 {
-	class Program
+	static async Task Main(string[] args)
 	{
-		static async Task Main(string[] args)
-		{
-			using IHost host = Host.CreateDefaultBuilder()
-				.ConfigureServices((context, services) =>
-				{
-					services.AddLogging();
-					services.AddOptions();
+		using IHost host = Host.CreateDefaultBuilder()
+			.ConfigureServices((context, services) =>
+			{
+				services.AddLogging();
+				services.AddOptions();
 
-					services.AddConsoleApp();
-					services.AddCustomLibrary();
-				})
-				.Build();
+				services.AddConsoleApp();
+				services.AddCustomLibrary();
+			})
+			.Build();
 
-			await host.Services.GetService<IConsoleService>().RunAsync(args);
-		}
+		await host.Services.GetService<IConsoleService>()!.RunAsync(args);
 	}
 }

@@ -2,10 +2,10 @@
 using System.Threading.Tasks;
 
 
-namespace ConsoleApp.Services
+namespace ConsoleApp.Services;
+
+
+public interface IDisposableService : IDisposable
 {
-	public interface IDisposableService : IDisposable
-	{
-		Task DoSomethingAsync();
-	}
+	Task DoSomethingAsync();
 }

@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
 
 
-namespace ClassLib
+namespace ClassLib;
+
+
+public interface ILibraryService
 {
-	public interface ILibraryService
-	{
-		Task DoSomethingSpecialAsync();
-	}
+	Task DoSomethingSpecialAsync();
 }

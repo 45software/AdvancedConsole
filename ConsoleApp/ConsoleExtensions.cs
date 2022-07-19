@@ -3,22 +3,22 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 
-namespace ConsoleApp
+namespace ConsoleApp;
+
+
+public static class ConsoleExtensions
 {
-	public static class ConsoleExtensions
+	public static IServiceCollection AddConsoleApp(this IServiceCollection services)
 	{
-		public static IServiceCollection AddConsoleApp(this IServiceCollection services)
-		{
-			services.AddOptions<CustomOptions>()
-				.Configure<IConfiguration>((settings, configuration) =>
-				{
-					configuration.GetSection(CustomOptions.Section).Bind(settings);
-				});
+		services.AddOptions<CustomOptions>()
+			.Configure<IConfiguration>((settings, configuration) =>
+			{
+				configuration.GetSection(CustomOptions.Section).Bind(settings);
+			});
 
-			services.AddTransient<IDisposableService, DisposableService>();
-			services.AddTransient<IConsoleService, ConsoleService>();
+		services.AddTransient<IDisposableService, DisposableService>();
+		services.AddTransient<IConsoleService, ConsoleService>();
 
-			return services;
-		}
+		return services;
 	}
 }
