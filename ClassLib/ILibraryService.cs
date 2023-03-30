@@ -1,7 +1,4 @@
-﻿using System.Threading.Tasks;
-
-
-namespace ClassLib;
+﻿namespace ClassLib;
 
 
 public interface ILibraryService

@@ -1,7 +1,7 @@
 ﻿namespace ClassLib;
 
 
-public class LibraryOptions
+public sealed class LibraryOptions
 {
 	public const string Section = "Library";
 

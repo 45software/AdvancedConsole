@@ -1,12 +1,10 @@
 ﻿using Microsoft.Extensions.Logging;
-using System;
-using System.Threading.Tasks;
 
 
 namespace ConsoleApp.Services;
 
 
-public class DisposableService : IDisposableService
+public sealed class DisposableService : IDisposableService
 {
 	private readonly ILogger<DisposableService> _logger;
 

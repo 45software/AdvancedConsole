@@ -1,12 +1,11 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using System.Threading.Tasks;
 
 
 namespace ClassLib;
 
 
-public class LibraryService : ILibraryService
+public sealed class LibraryService : ILibraryService
 {
 	private readonly ILogger<LibraryService> _logger;
 	private readonly LibraryOptions _options;

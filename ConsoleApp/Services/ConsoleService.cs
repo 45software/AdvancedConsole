@@ -1,14 +1,12 @@
 ﻿using ClassLib;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using System;
-using System.Threading.Tasks;
 
 
 namespace ConsoleApp.Services;
 
 
-public class ConsoleService : IConsoleService
+public sealed class ConsoleService : IConsoleService
 {
 	private readonly IDisposableService _service;
 	private readonly ILibraryService _library;

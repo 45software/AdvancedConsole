@@ -1,8 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-
-
-namespace ConsoleApp.Services;
+﻿namespace ConsoleApp.Services;
 
 
 public interface IDisposableService : IDisposable
