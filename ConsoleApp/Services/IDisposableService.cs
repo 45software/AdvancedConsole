@@ -3,5 +3,5 @@
 
 public interface IDisposableService : IDisposable
 {
-	Task DoSomethingAsync();
+	Task DoSomethingAsync(CancellationToken cancellationToken);
 }
