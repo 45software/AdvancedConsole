@@ -3,5 +3,5 @@
 
 public interface ILibraryService
 {
-	Task DoSomethingSpecialAsync();
+	Task DoSomethingSpecialAsync(CancellationToken cancellationToken);
 }

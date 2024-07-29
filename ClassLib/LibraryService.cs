@@ -18,10 +18,10 @@ public sealed class LibraryService : ILibraryService
 	}
 
 
-	public async Task DoSomethingSpecialAsync()
+	public async Task DoSomethingSpecialAsync(CancellationToken cancellationToken)
 	{
 		_logger.LogInformation("The library service is doing something special.");
-		await Task.Delay(1500);
+		await Task.Delay(1500, cancellationToken);
 		_logger.LogInformation("{Sender} has a special message for you '{Message}'",
 			_options.Sender, _options.Message);
 	}

@@ -1,19 +1,49 @@
 ﻿using ClassLib;
 using ConsoleApp;
-using ConsoleApp.Services;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 
-using IHost host = Host.CreateDefaultBuilder()
-	.ConfigureServices(services =>
-	{
-		services.AddLogging();
-		services.AddOptions();
+// Configuration setup
+IHostBuilder builder = Host.CreateDefaultBuilder(args);
+builder.ConfigureAppConfiguration(c =>
+{
+	c.AddCommandLine(args);
+});
 
-		services.AddConsoleApp();
-		services.AddCustomLibrary();
-	})
-	.Build();
+builder.ConfigureServices(services =>
+{
+	services.AddLogging();
+	services.AddOptions();
 
-await host.Services.GetService<IConsoleService>()!.RunAsync(args);
+	services.AddConsoleApp();
+	services.AddCustomLibrary();
+});
+
+using IHost host = builder.Build();
+
+
+// Setup shutdown process
+using CancellationTokenSource tokenSource = new();
+Console.CancelKeyPress += Shutdown;
+
+IHostedService? service = host.Services.GetService<IHostedService>();
+if (service != null)
+{
+	await service.StartAsync(tokenSource.Token);
+	await service.StopAsync(tokenSource.Token);
+}
+else
+{
+	Console.WriteLine("Error: Failed to get a reference to the service");
+}
+
+
+// Perform custom shutdown actions when the program is forced to quit
+void Shutdown(object? sender, ConsoleCancelEventArgs e)
+{
+	e.Cancel = true;
+	tokenSource.Cancel();
+	host.StopAsync();
+}
