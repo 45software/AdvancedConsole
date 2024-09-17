@@ -21,7 +21,14 @@ public sealed class LibraryService : ILibraryService
 	public async Task DoSomethingSpecialAsync(CancellationToken cancellationToken)
 	{
 		_logger.LogInformation("The library service is doing something special.");
-		await Task.Delay(1500, cancellationToken);
+		try
+		{
+			await Task.Delay(1500, cancellationToken);
+		}
+		catch (TaskCanceledException)
+		{
+			_logger.LogInformation("LibraryService detected a shutdown");
+		}
 		_logger.LogInformation("{Sender} has a special message for you '{Message}'",
 			_options.Sender, _options.Message);
 	}

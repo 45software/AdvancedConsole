@@ -39,11 +39,11 @@ else
 	Console.WriteLine("Error: Failed to get a reference to the service");
 }
 
+Console.CancelKeyPress -= Shutdown;
 
 // Perform custom shutdown actions when the program is forced to quit
 void Shutdown(object? sender, ConsoleCancelEventArgs e)
 {
 	e.Cancel = true;
 	tokenSource.Cancel();
-	host.StopAsync();
 }

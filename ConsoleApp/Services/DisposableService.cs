@@ -30,6 +30,13 @@ public sealed class DisposableService : IDisposableService
 	{
 		_logger.LogInformation("The DisposableService is doing something...");
 		_logger.LogInformation("Task from command line is {Task} with a delay of {Delay}", _configuration.Task, _configuration.Delay);
-		await Task.Delay(_configuration.Delay > 0 ? _configuration.Delay : 1500, cancellationToken);
+		try
+		{
+			await Task.Delay(_configuration.Delay > 0 ? _configuration.Delay : 1500, cancellationToken);
+		}
+		catch (TaskCanceledException)
+		{
+			_logger.LogInformation("DisposableService detected a shutdown");
+		}
 	}
 }
