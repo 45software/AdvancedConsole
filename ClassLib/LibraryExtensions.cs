@@ -10,9 +10,9 @@ public static class LibraryExtensions
 	public static IServiceCollection AddCustomLibrary(this IServiceCollection services)
 	{
 		services.AddOptions<LibraryOptions>()
-			.Configure<IConfiguration>((settings, configuration) =>
+			.Configure<IConfiguration>((options, configuration) =>
 			{
-				configuration.GetSection(LibraryOptions.Section).Bind(settings);
+				configuration.GetSection(LibraryOptions.Section).Bind(options);
 			});
 
 		services.AddTransient<ILibraryService, LibraryService>();

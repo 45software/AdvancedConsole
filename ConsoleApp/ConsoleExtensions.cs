@@ -12,9 +12,9 @@ public static class ConsoleExtensions
 	public static IServiceCollection AddConsoleApp(this IServiceCollection services)
 	{
 		services.AddOptions<CustomOptions>()
-			.Configure<IConfiguration>((settings, configuration) =>
+			.Configure<IConfiguration>((options, configuration) =>
 			{
-				configuration.GetSection(CustomOptions.Section).Bind(settings);
+				configuration.GetSection(CustomOptions.Section).Bind(options);
 			});
 
 		services.AddOptions<TaskOptions>()
