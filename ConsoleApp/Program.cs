@@ -28,18 +28,24 @@ using IHost host = builder.Build();
 using CancellationTokenSource tokenSource = new();
 Console.CancelKeyPress += Shutdown;
 
-IHostedService? service = host.Services.GetService<IHostedService>();
-if (service != null)
+try
 {
-	await service.StartAsync(tokenSource.Token);
-	await service.StopAsync(tokenSource.Token);
+	IHostedService? service = host.Services.GetService<IHostedService>();
+	if (service != null)
+	{
+		await service.StartAsync(tokenSource.Token);
+		await service.StopAsync(tokenSource.Token);
+	}
+	else
+	{
+		Console.WriteLine("Error: Failed to get a reference to the service");
+	}
 }
-else
+finally
 {
-	Console.WriteLine("Error: Failed to get a reference to the service");
+	Console.CancelKeyPress -= Shutdown;
 }
 
-Console.CancelKeyPress -= Shutdown;
 
 // Perform custom shutdown actions when the program is forced to quit
 void Shutdown(object? sender, ConsoleCancelEventArgs e)
